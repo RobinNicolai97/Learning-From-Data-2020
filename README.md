@@ -1,2 +1,2 @@
-# Learning From Data 2020
- For the course
+# Wekelijkste verslagen:
+Week 1: https://www.overleaf.com/6842176975yqcsyxpnpwyg 
