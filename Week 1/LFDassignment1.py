@@ -57,7 +57,7 @@ else:
     vec = CountVectorizer(preprocessor = identity,
                           tokenizer = identity)
 
-# combine the vectorizer with a Naive Bayes classifier
+# combine the vectorizer with a Naive Bayes classifier.
 classifier = Pipeline( [('vec', vec),
                         ('cls', MultinomialNB())] )
 
