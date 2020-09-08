@@ -2,7 +2,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 
 # COMMENT THIS
 # This function takes the corpus textfile as an input, together with a Boolean expression (True/False).
@@ -38,7 +38,7 @@ def identity(x):
 # The function read_corpus is activated, so that X == the textual content of the reviews and Y == their corresponding labels.
 # The data is divided into 75% training-data and 25% test-data. 
 
-X, Y = read_corpus('trainset.txt', use_sentiment=True)
+X, Y = read_corpus('trainset.txt', use_sentiment=False)
 split_point = int(0.75*len(X))
 Xtrain = X[:split_point]
 Ytrain = Y[:split_point]
@@ -73,5 +73,8 @@ Yguess = classifier.predict(Xtest)
 
 # COMMENT THIS
 # a simple accuracy measure is taken. This score is basicly how many times Ytest[X] == Yguess[X], divided by the length of Ytest and Yguess (which are both the same length).
-print(accuracy_score(Ytest, Yguess))
-
+print('\n accuracy score:', accuracy_score(Ytest, Yguess) ) 
+print('\n\n') 
+print(classification_report(Ytest,Yguess))
+print('\n Confusion Matrix \n') 
+print(confusion_matrix(Ytest,Yguess))
