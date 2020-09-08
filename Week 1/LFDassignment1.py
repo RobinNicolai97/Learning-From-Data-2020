@@ -5,7 +5,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score
 
 # COMMENT THIS
-# This function takes the corpus textfile as an input, together with a Boolean expression (True/False)
+# This function takes the corpus textfile as an input, together with a Boolean expression (True/False).
 # If use_sentiment == True, the script will classify reviews as positive or negative. If use_sentiment == False, it will classify reviews into six possible categories. 
 # It takes the label (the to be predicted class) out of each line in the tokenized textfile ( tokens[1] for sentiment, tokens[0] for category ) 
 # together with the textual content of the review: token[3:].
