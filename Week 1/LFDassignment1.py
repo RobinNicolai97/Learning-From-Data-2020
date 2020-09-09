@@ -7,8 +7,12 @@ import sys
 # Checks the command line arguments for input
 # sentiment - enables sentiment
 # probability - shows predictions as probability
-arg_sentiment = sys.argv[1].lower() == "sentiment"
-arg_probability = sys.argv[2].lower() == "probability"
+arg_sentiment = False
+arg_probability = False
+if len(sys.argv) > 1:
+    arg_sentiment = sys.argv[1].lower() == "sentiment"
+if len(sys.argv) > 2:
+    arg_probability = sys.argv[2].lower() == "probability"
 
 # COMMENT THIS
 # This function takes the corpus textfile as an input, together with a Boolean expression (True/False).
