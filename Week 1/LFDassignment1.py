@@ -2,6 +2,13 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
+import sys
+
+# Checks the command line arguments for input
+# sentiment - enables sentiment
+# probability - shows predictions as probability
+arg_sentiment = sys.argv[1].lower() == "sentiment"
+arg_probability = sys.argv[2].lower() == "probability"
 
 # COMMENT THIS
 # This function takes the corpus textfile as an input, together with a Boolean expression (True/False).
@@ -37,7 +44,7 @@ def identity(x):
 # The function read_corpus is activated, so that X == the textual content of the reviews and Y == their corresponding labels.
 # The data is divided into 75% training-data and 25% test-data. 
 
-X, Y = read_corpus('trainset.txt', use_sentiment=False)
+X, Y = read_corpus('trainset.txt', use_sentiment=arg_sentiment)
 split_point = int(0.75*len(X))
 Xtrain = X[:split_point]
 Ytrain = Y[:split_point]
@@ -67,8 +74,14 @@ classifier = Pipeline( [('vec', vec),
 classifier.fit(Xtrain, Ytrain)
 
 # COMMENT THIS  
-# The Naive Bayes classifier predicts the classes of all reviews in the test-data. 
+# The Naive Bayes classifier predicts the classes of all reviews in the test-data.
 Yguess = classifier.predict(Xtest)
+
+# The script prints all probabilities for each feature set
+if arg_probability:
+    prob_list = classifier.predict_proba(Xtest)
+    for prob_array in prob_list:
+        print(prob_array)
 
 # COMMENT THIS
 # a simple accuracy measure is taken. This score is basicly how many times Ytest[X] == Yguess[X], divided by the length of Ytest and Yguess (which are both the same length).
