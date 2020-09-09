@@ -1,7 +1,6 @@
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
-
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 
 # COMMENT THIS
