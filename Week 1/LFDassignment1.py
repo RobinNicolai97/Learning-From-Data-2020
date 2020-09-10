@@ -84,6 +84,7 @@ Yguess = classifier.predict(Xtest)
 # The script prints all probabilities for each feature set
 if arg_probability:
     prob_list = classifier.predict_proba(Xtest)
+    print(classifier.classes_)
     for prob_array in prob_list:
         print(prob_array)
 else:
