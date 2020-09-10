@@ -86,11 +86,11 @@ if arg_probability:
     prob_list = classifier.predict_proba(Xtest)
     for prob_array in prob_list:
         print(prob_array)
-
-# COMMENT THIS
-# a simple accuracy measure is taken. This score is basicly how many times Ytest[X] == Yguess[X], divided by the length of Ytest and Yguess (which are both the same length).
-print('\n accuracy score:', accuracy_score(Ytest, Yguess) ) 
-print('\n\n') 
-print(classification_report(Ytest,Yguess))
-print('\n Confusion Matrix \n') 
-print(confusion_matrix(Ytest,Yguess))
+else:
+    # COMMENT THIS
+    # a simple accuracy measure is taken. This score is basicly how many times Ytest[X] == Yguess[X], divided by the length of Ytest and Yguess (which are both the same length).
+    print('\n accuracy score:', accuracy_score(Ytest, Yguess) )
+    print('\n\n')
+    print(classification_report(Ytest,Yguess))
+    print('\n Confusion Matrix \n')
+    print(confusion_matrix(Ytest,Yguess))
