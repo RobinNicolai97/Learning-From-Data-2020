@@ -6,6 +6,7 @@ import sys
 import time
 from nltk.corpus import stopwords 
 from nltk.stem import WordNetLemmatizer, PorterStemmer
+from nltk import ngrams, pos_tag
 from sklearn.svm import SVC, LinearSVC
 
 # Checks the command line arguments for input
@@ -28,6 +29,7 @@ testset = sys.argv[2]
 def read_corpus(corpus_file):
     documents = []
     labels = []
+    n = 2
     #stop_words = set(stopwords.words('english')) 
     #stemmer = PorterStemmer()
     with open(corpus_file, encoding='utf-8') as f:
@@ -39,8 +41,9 @@ def read_corpus(corpus_file):
                 #if word not in stop_words and word.isalpha(): #removing stopwords and non-alphabetic string. 
                     #word = stemmer.stem(word) #stemming words
                     #tokens_processed.append(word)
+            bigrams = ngrams(tokens[3:], n)
                     
-            documents.append(tokens[3:]) 
+            documents.append(pos_tag(tokens[3:]))
             # 2-class problem: positive vs negative
             labels.append( tokens[1] )
 
@@ -70,7 +73,7 @@ else:
 
 # combine the vectorizer with a Naive Bayes classifier.
 classifier = Pipeline( [('vec', vec),
-                        ('cls', LinearSVC(C = 1.5))] )
+                        ('cls', LinearSVC(C = 0.8))] )
                         
 # 
 # The Naive Bayes classifier takes the textual content of the reviews and their corresponding classes. 
