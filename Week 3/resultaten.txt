@@ -76,13 +76,36 @@ gamma 0.6, c 1.5: 0.8326666666666667
 
 ... c2: 0.8353333333333334
 ... c3: 0.8353333333333334
-
-gamma 0.8, c3:  0.8413333333333334
+gamma 0.8, c4:  0.8406666666666667
+gamma 0.8, c3.5:  0.8406666666666667
+gamma 0.8, c3:  0.8413333333333334 (hoogst)
 gamma 0.8, c2: 0.84
 
 gamma 1, c3:0.8413333333333334
+gamma 1, c4: 0.8413333333333334
 gamma 1.1, c3: 0.838
 gamma 1.5, c3:0. 0.8373333333333334
 gamma 1, c2: 0.8393333333333334
 
 
+Vraag 4: 
+https://intellipaat.com/community/19783/which-one-is-better-linearsvc-or-svc#:~:text=The%20key%20principles%20of%20that,for%20loss%20parameter%20in%20LinearSVC. 
+
+Linear is veel sneller. c1 = 0.8333333333333334, c2 = 0.8266666666666667, c1.5 = 0.828
+( This is due to the fact that the linear kernel is a special case, which is optimized for in Liblinear, but not in Libsvm.)
+
+But after I change LinearSVC to SVC(kernel=’linear’), the program couldn’t work out any result even after 12 hours!
+Am I doing anything wrong? In the page of sklearn.svm.LinearSVC, there is a note:
+
+Similar to SVC with parameter kernel=’linear’, but implemented in terms of liblinear rather than libsvm, so it has more flexibility in the choice of penalties and loss functions and should scale better to large numbers of samples.
+
+Also in the page of sklearn.svm.SVC, it’s another note:
+
+The implementation is based on libsvm. The fit time complexity is more than quadratic with the number of samples which makes it hard to scale to dataset with more than a couple of 10000 samples.
+
+That’s the answer: LinearSVC is the right choice to process a large number of samples.
+
+
+
+
+Vraag 5: it is highly recommended to scale your data (stond ergens in een scikit linkje) 

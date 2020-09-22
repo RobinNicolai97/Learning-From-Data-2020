@@ -6,7 +6,7 @@ import sys
 import time
 from nltk.corpus import stopwords 
 from nltk.stem import WordNetLemmatizer, PorterStemmer
-from sklearn.svm import SVC
+from sklearn.svm import SVC, LinearSVC
 
 # Checks the command line arguments for input
 
@@ -70,7 +70,7 @@ else:
 
 # combine the vectorizer with a Naive Bayes classifier.
 classifier = Pipeline( [('vec', vec),
-                        ('cls', SVC(kernel= 'rbf', gamma=1.1, C= 3))] )
+                        ('cls', LinearSVC(C = 1.5))] )
                         
 # 
 # The Naive Bayes classifier takes the textual content of the reviews and their corresponding classes. 
