@@ -70,7 +70,7 @@ else:
 
 # combine the vectorizer with a Naive Bayes classifier.
 classifier = Pipeline( [('vec', vec),
-                        ('cls', SVC(kernel='linear', C=0.1))] )
+                        ('cls', SVC(kernel= 'rbf', gamma=1.1, C= 3))] )
                         
 # 
 # The Naive Bayes classifier takes the textual content of the reviews and their corresponding classes. 
