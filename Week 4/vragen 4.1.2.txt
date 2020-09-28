@@ -1,0 +1,128 @@
+Lead singers:
+Queen - Freddie Mercury, Nirvana?
+
+------------------------------------------------------------------------
+                                      Jimi_Hendrix              0.557756
+                                       Kurt_Cobain              0.542104
+                                           NIRVANA              0.537710
+
+Right, but second. Both men were two of the most prominent rock musicians of their era's, they had the same roles in their bands and also covered each others music. 
+
+
+Rolling Stones - Mick Jagger, Led zeppelin? 
+
+                                              Word              Distance
+------------------------------------------------------------------------
+                                           Led_Zep              0.596053
+                                        Jimmy_Page              0.585142
+                                       Led_Zepplin              0.557802
+                                      Jimi_Hendrix              0.528300
+                                      Eric_Clapton              0.526369
+
+Jimmy page is a member of Led Zeppelin, just not the lead singer. 
+
+
+The Beatles - Paul McCartney, Pink Floyd?
+------------------------------------------------------------------------
+                                      Roger_Waters              0.650947
+
+Correct!
+
+
+Capitals:
+
+England London, Spain?
+
+                                              Word              Distance
+------------------------------------------------------------------------
+                                            Madrid              0.639612
+
+Correct!
+
+Japan Tokyo, China?
+
+------------------------------------------------------------------------
+                                           Beijing              0.821620
+
+Correct!
+
+Netherlands Amsterdam, Germany?
+
+                                              Word              Distance
+------------------------------------------------------------------------
+                                         Frankfurt              0.718393
+                                            Berlin              0.715713
+                                        Dusseldorf              0.688422
+
+Frankfurt was the original choice for the provisional capital city of the newly founded state of West Germany.
+Also financial capital of Germany and has been capital of Germany. Also From 1816 to 1866 the city was the seat of the German Bundestag (Federal Diet) and thus the capital of Germany. 
+
+
+Color:
+
+Apple Red, Banana? 
+
+                                              Word              Distance
+------------------------------------------------------------------------
+                                            yellow              0.588489
+Correct!
+
+grass green, sky?
+
+------------------------------------------------------------------------
+                                        Flares_lit              0.451821
+                                          blue_sky              0.446350
+
+Flares can lit the sky, flare-lit sky is a vietnamese poetry book. 
+
+snow white, grass?
+
+
+                                             brown              0.529913
+                                             black              0.507950
+                                              blue              0.486824
+                                      browns_grays              0.486016
+                                           striped              0.481346
+                                     cream_colored              0.461486
+                                          burgundy              0.449661
+                                     white_striped              0.448098
+                                        underwings              0.446428
+                                       reds_browns              0.441884
+                                           colored              0.441287
+                                        reds_pinks              0.440802
+                            fleshed_sweet_potatoes              0.439716
+                                    yellows_browns              0.439330
+                                          plumbago              0.436096
+                             tall_eucalyptus_trees              0.432511
+                                     browns_beiges              0.432372
+                                     orangey_brown              0.432308
+                                     violet_purple              0.431006
+                                          jerseyed              0.430877
+                                     greyish_brown              0.430599
+                                       mondo_grass              0.427521
+                                            purple              0.426851
+                                    greenish_brown              0.424870
+
+
+??? 
+
+
+Sounds:
+
+Cow moo, sheep?
+
+
+                                              baaa              0.458282
+
+
+
+
+Cat meow, dog? 
+
+------------------------------------------------------------------------
+                                         woof_woof              0.539637
+
+bird chirp pig?
+
+                                            squeal              0.486708
+                                         Oink_oink              0.468932

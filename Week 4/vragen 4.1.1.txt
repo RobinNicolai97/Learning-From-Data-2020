@@ -1,0 +1,397 @@
+4.1.1:
+
+Heavy metal: Expected some more music genres (pop, rock, folk, techno) to be similar words. Intead:
+
+Enter word or sentence (EXIT to break): heavy metal
+
+Word: heavy  Position in vocabulary: 1701
+
+Word: metal  Position in vocabulary: 3349
+
+Got other metals like aluminum, zinc alloy, but also some heavy metal bands. 
+of course the other meaning of metal has gained priority here. Also performers of the genre seem to be more similar than different types of genres. 
+
+
+                                              Word       Cosine distance
+------------------------------------------------------------------------
+                                             Heavy              0.613534
+                                            metals              0.547927
+                                   Allan_Bevington              0.542079
+                                           heavier              0.539348
+                                             Metal              0.532087
+                                             steel              0.525118
+                                     roofed_hangar              0.511623
+                                          aluminum              0.510233
+                               legends_IRON_MAIDEN              0.505121
+                            gauge_galvanized_steel              0.498718
+                                          nonmetal              0.494947
+                                       zinc_cobalt              0.494022
+                               legends_Iron_Maiden              0.490159
+                                     clawed_mutant              0.489368
+                                 metal_rocker_Ozzy              0.489347
+                                        diecasting              0.483606
+                                  jacketed_bullets              0.483140
+                                lift_vessel_Svanen              0.480821
+                                   jacketed_bullet              0.477850
+                                    thallium_toxic              0.477740
+                           Splintered_wood_mangled              0.475163
+                                        prepainted              0.474184
+                                       Al_Ghirayib              0.473586
+                            shredding_guitar_solos              0.471459
+                                     ferrous_metal              0.471360
+                             injection_molding_MIM              0.470850
+                                  Galvanized_steel              0.469790
+                                          metallic              0.468744
+                                         aluminums              0.467506
+                                  blackened_shards              0.466093
+                                          heaviest              0.465511
+                                        zinc_alloy              0.465429
+                            galvanized_steel_sheet              0.464575
+                                  BASE_METALS_Base              0.463422
+                                           Heavier              0.463338
+                             excavators_bulldozers              0.463002
+                           polycyclic_hydrocarbons              0.461229
+                                  Tungsten_carbide              0.460342
+                                   band_Quiet_Riot              0.460015
+                                     Rautaruukki_K              0.459243
+
+
+
+Enter word or sentence (EXIT to break): mandarin.
+
+expected other chinese languages like Wu, Yue.
+Instead got a lot of fruits, because a mandarin is also fruit. 
+
+Word: mandarin  Position in vocabulary: 111783
+
+                                              Word       Cosine distance
+------------------------------------------------------------------------
+                                         mandarins              0.599719
+                                               ume              0.519839
+                                           kumquat              0.491687
+                                   mandarin_orange              0.489351
+                                         Mandarins              0.487020
+                                           perilla              0.481946
+                                              pear              0.479215
+                                             plums              0.474928
+                                              Yuzu              0.472068
+                                        pear_apple              0.469558
+                                       kaffir_lime              0.467922
+                                           apricot              0.465862
+                                          mulberry              0.464544
+                                        bureaucrat              0.463662
+                                            pomelo              0.461169
+                                         osmanthus              0.460031
+                                              pome              0.459114
+                                          pak_choi              0.457500
+                                         tangerine              0.457192
+                                     fruity_floral              0.456023
+                                   frangipane_tart              0.454926
+                                        clementine              0.451160
+                                   pineapple_guava              0.448817
+                                            citron              0.447677
+                                            plummy              0.447316
+                                       dragonfruit              0.447060
+                                     peach_blossom              0.447017
+                                            damson              0.446411
+                                      blackcurrant              0.445763
+                                      orange_pekoe              0.445583
+                                          pak_choy              0.445421
+                                            jujube              0.444758
+                                      leeks_garlic              0.444638
+                                        peach_pear              0.443448
+                                             choko              0.442936
+                                       Kaffir_lime              0.442695
+                                        kiwi_fruit              0.442569
+                                         Cara_Cara              0.442354
+                                          kumquats              0.442260
+                                       red_currant              0.442260
+
+
+Word: robin  Position in vocabulary: 99783
+
+similar to other types of birds, as expected. 
+Nice find: found another type of bird that can also be a name!! (Phoebe)
+
+                                              Word       Cosine distance
+------------------------------------------------------------------------
+                                             finch              0.682147
+                                            phoebe              0.678887
+                           white_breasted_nuthatch              0.668657
+                                            robins              0.661846
+                            rose_breasted_grosbeak              0.658809
+                                         goldfinch              0.655685
+                                          grosbeak              0.649993
+                                              bird              0.648266
+                            red_bellied_woodpecker              0.647142
+                                  downy_woodpecker              0.644386
+                             red_breasted_nuthatch              0.642479
+                                          squirrel              0.640468
+                                              wren              0.636361
+                                      gray_catbird              0.635853
+                                  hairy_woodpecker              0.634193
+                                            shrike              0.633523
+                                             junco              0.632551
+                                     varied_thrush              0.630246
+                             yellow_rumped_warbler              0.630203
+                                  chipping_sparrow              0.628511
+                                    hooded_warbler              0.628364
+                                       winter_wren              0.628292
+                          yellow_bellied_sapsucker              0.627810
+                                    yellow_warbler              0.627773
+                                   dark_eyed_junco              0.626674
+                                       goldfinches              0.625815
+                                    purple_finches              0.625147
+                              red_winged_blackbird              0.624455
+                                        kingfisher              0.621525
+                                          killdeer              0.619648
+                                         chickadee              0.618784
+                                           sparrow              0.618019
+                                            oriole              0.616981
+                                          redstart              0.616355
+                                       pine_siskin              0.615141
+                                 belted_kingfisher              0.614289
+                                  Baltimore_oriole              0.613593
+                                  scarlet_tanagers              0.612905
+                                rufous_hummingbird              0.612586
+                                           mallard              0.612401
+
+Enter word or sentence (EXIT to break): mint.
+As expected a lot of (ice cream) flavours, but most interesting:
+ Steven_L._Contursi has made billions of dollars selling rare coins.
+It is clear that the 'mint condition' of these coins has been interferring with these results. 
+Also the words coins pops up. 
+
+
+Word: mint  Position in vocabulary: 25115
+
+                                              Word       Cosine distance
+------------------------------------------------------------------------
+                                Steven_L._Contursi              0.543437
+                                              Mint              0.543228
+                                             mints              0.540978
+                                uncirculated_coins              0.525245
+                                      uncirculated              0.513528
+                                   parsley_chervil              0.486162
+                                  flavored_gelatin              0.483487
+                                        peppermint              0.478127
+                                             coins              0.477921
+                                   maple_flavoring              0.477440
+                                       lime_slices              0.476849
+                                    chocolate_mint              0.475891
+                                     vanilla_beans              0.475828
+                                   vanilla_caramel              0.474735
+                                            minted              0.474566
+                                      carat_edible              0.473436
+                                    apple_strudels              0.473432
+                                     vanilla_creme              0.472145
+                                   roasted_almonds              0.472119
+                                    cilantro_basil              0.472070
+                                           apricot              0.471193
+                                             minty              0.470943
+                                      anise_hyssop              0.470923
+                                  pink_peppercorns              0.470185
+                                  candied_cherries              0.469990
+                                         raspberry              0.469566
+                                     lemon_ricotta              0.467738
+                                   walnuts_raisins              0.467447
+                                    candied_orange              0.467433
+                               lavender_peppermint              0.466286
+                               roasted_cocoa_beans              0.465706
+                                   buffalo_nickels              0.465392
+                              peppermint_spearmint              0.465382
+                              spearmint_peppermint              0.465160
+                                       tart_flavor              0.464692
+                                             lemon              0.464643
+                                    sweet_marjoram              0.464213
+                              blueberries_cherries              0.463629
+                                    cashew_brittle              0.463009
+                                     concord_grape              0.462853
+
+
+
+
+
+Word: vinyl  Position in vocabulary: 19288
+expected other types of materials, because of the material vinyl. (polyvinylchloride).
+Only found similarities (a.k.a. other carriers of music) to vinyl records, often referred to as 'vinyls'.   
+
+                                              Word       Cosine distance
+------------------------------------------------------------------------
+                                          vinyl_LP              0.683010
+                                             Vinyl              0.675208
+                                            vinyls              0.656533
+                                        gram_vinyl              0.646225
+                                      vinyl_albums              0.637703
+                                   gatefold_sleeve              0.583324
+                                   gram_audiophile              0.581633
+                                               LPs              0.571986
+                                         vinyl_LPs              0.567304
+                                    vinyl_reissues              0.560920
+                                     vinyl_reissue              0.559112
+                                          acetates              0.551679
+                                       CD_reissues              0.551116
+                                  plastic_laminate              0.537973
+                                        REM_Murmur              0.537529
+                                                CD              0.536878
+                                   vinyl_pressings              0.536294
+                                         pressings              0.535684
+                                 linoleum_flooring              0.535527
+                                   deluxe_gatefold              0.533245
+                                   deluxe_editions              0.533144
+                                  velvet_wallpaper              0.529517
+                                    cassette_decks              0.529375
+                                    oft_bootlegged              0.528946
+                                  audiophile_vinyl              0.528157
+                                   gatefold_jacket              0.526952
+                                           Digipak              0.526179
+                                     Siamese_Dream              0.524992
+                                             ##RPM              0.523406
+                                          digi_pak              0.521506
+                                     ##rpm_records              0.520592
+                                phonograph_records              0.519858
+                                          digipack              0.518814
+                                          cassette              0.518578
+                                           digipak              0.518480
+                                           thinpak              0.517054
+                                         pickguard              0.516372
+                                    Nirvana_Bleach              0.515920
+                                    adhesive_vinyl              0.515877
+                                          laminate              0.515487
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
