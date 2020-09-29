@@ -1,0 +1,73 @@
+normaal binary ongeveer .92
+activation softmax: .88
+activation relu: 0.9
+activation sigmoid: 0.78
+activation softplus: 0.88
+activation tanh: 0.9
+activation exponential: 0.66
+activation elu: 0.91
+activation selu: 0.93 (beter)
+
+(vanaf selu:)
+epochs: was 1
+2: 0.93
+3: 0.92
+4: 0.93
+5: 0.92
+7: 0.93
+10: 0.93
+
+(vanaf selu:)
+Batch size: was 32
+5: 0.93
+10: 0.92
+20: 0.93
+40: 0.91
+50: 0.9
+60: 0.92
+
+(vanaf selu:)
+Learning rate: was 0.01
+0.02: 0.93
+0.03: 0.93
+0.05: 0.92
+0.07: 0.94 (eindelijk hoger)
+0.09: 0.91 :(
+0.5: 0.61
+
+normaal 6-class ongeveer .64
+activation softmax: .33
+activation relu: 0.46
+activation sigmoid: 0,46
+activation tanh: 0.5
+activation exponential:0.58
+activation elu: 0.63
+activation selu: 0.7 (beter)
+
+(vanaf selu:)
+epochs: was 1
+2: 0.78 (veel beter)
+3: 0.8 (nog beter)
+4: 0.82 (nog beter)
+5: 0.82
+7: 0.82
+10: 0.83
+15: 0.82"
+
+(vanaf selu:)
+Batch size: was 32
+5: 0.83 (best)
+10: 0.81 (beter)
+20: 0.74 (beter)
+40: 0.64
+50: 0.57
+60: 0.58
+
+(vanaf selu:)
+Learning rate: was 0.01
+0.02: 0.79 (veel beter)
+0.03: 0.8
+0.05: 0.83
+0.07: 0.83
+0.09: 0.82
+0.5: 0.27 (drastisch!)
