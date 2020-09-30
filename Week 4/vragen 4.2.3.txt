@@ -1,0 +1,14 @@
+our word: suzuki
+in training set: honda, toyata, mitsubishi
+ORG
+predicts: CARDINAL
+
+our word: valve
+in training set: apple, microsoft, sony
+ORG
+predicts: PERSON
+
+our word: peking
+in training set: taipei tokyo beijing
+GPE
+predicts: ORG

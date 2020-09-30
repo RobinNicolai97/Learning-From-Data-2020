@@ -64,8 +64,11 @@ if __name__ == '__main__':
 	X, Y = read_corpus(args.data, binary_classes=args.binary)
 	embeddings = read_embeddings(args.embeddings)
 
+	Zstring = ["suzuki", "adidas", "peking"]
+
 	# Transform words to embeddings
 	X = vectorizer(X, embeddings)
+	Z = vectorizer(Zstring, embeddings)
 
 	# Transform string labels to one-hot encodings
 	encoder = LabelBinarizer()
@@ -93,6 +96,12 @@ if __name__ == '__main__':
 
 	# Get predictions
 	Yguess = model.predict(Xtest)
+
+	# Test words not in training set
+	Zguess = model.predict_classes(Z)
+	for index, element in enumerate(Zguess):
+		print(str(Zstring[index]) + ": " + str(encoder.classes_[element]))
+	print()
 
 	# Convert to numerical labels to get scores with sklearn in 6-way setting
 	Yguess = numpy.argmax(Yguess, axis=1)
