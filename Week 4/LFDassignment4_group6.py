@@ -56,9 +56,9 @@ if __name__ == '__main__':
 
 	# hyperparameter settings
 	hyp_activation = "selu"
-	hyp_epochs = 1
-	hyp_batch_size = 32
-	hyp_learning_rate = 0.01
+	hyp_epochs = 10
+	hyp_batch_size = 5
+	hyp_learning_rate = 0.07
 
 	# Read in the data and embeddings
 	X, Y = read_corpus(args.data, binary_classes=args.binary)
@@ -108,3 +108,4 @@ if __name__ == '__main__':
 	Ytest = numpy.argmax(Ytest, axis=1)
 	print('Classification accuracy on test: {0}'.format(accuracy_score(Ytest, Yguess)))
 	print(confusion_matrix(Ytest, Yguess))
+	print(classification_report(Ytest, Yguess))
