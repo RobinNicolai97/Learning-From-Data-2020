@@ -3,6 +3,7 @@ from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 from keras.optimizers import SGD
 from sklearn.metrics import accuracy_score, classification_report, accuracy_score, confusion_matrix
+from sklearn.dummy import DummyClassifier
 from sklearn.preprocessing import LabelBinarizer
 numpy.random.seed(1337)
 
@@ -84,6 +85,7 @@ if __name__ == '__main__':
 	Ytest = Y[split_point:]
 
 	# Define the properties of the perceptron model
+	dummy_clf = DummyClassifier(strategy="most_frequent")
 	model = Sequential()
 	model.add(Dense(input_dim=X.shape[1], units=Y.shape[1]))
 	model.add(Activation(hyp_activation))
@@ -92,9 +94,12 @@ if __name__ == '__main__':
 	model.compile(loss=loss_function, optimizer=sgd, metrics=['accuracy'])
 
 	# Train the perceptron
-	model.fit(Xtrain, Ytrain, verbose=1, epochs=hyp_epochs, batch_size=hyp_batch_size)
+	dummy_clf.fit(Xtrain, Ytrain)
+	model.fit(Xtrain, Ytrain, verbose=1, epochs=hyp_epochs, batch_size=hyp_batch_size)	
+
 
 	# Get predictions
+	Yguessbase = dummy_clf.predict(Xtest)
 	Yguess = model.predict(Xtest)
 
 	# Test words not in training set
@@ -105,7 +110,11 @@ if __name__ == '__main__':
 
 	# Convert to numerical labels to get scores with sklearn in 6-way setting
 	Yguess = numpy.argmax(Yguess, axis=1)
+	Yguessbase = numpy.argmax(Yguessbase, axis=1)
 	Ytest = numpy.argmax(Ytest, axis=1)
+	print('\n perceptron \n')
 	print('Classification accuracy on test: {0}'.format(accuracy_score(Ytest, Yguess)))
 	print(confusion_matrix(Ytest, Yguess))
 	print(classification_report(Ytest, Yguess))
+	print('\n baseline \n')
+	print(classification_report(Ytest, Yguessbase))
