@@ -18,11 +18,25 @@ def read_corpus(dir_name='data'):
 
 def main():
 	article_list = read_corpus('data')
-
-	print(article_list)
+	subjects = []
+	#print(article_list)
+	print('number of articles:', len(article_list))
 	for article in article_list:
-		print(article[3])
-
-
+		#print(article[3])
+		subs = article['classification']['subject']
+		if subs:
+			for sub in subs:
+				subjects.append(sub['name']) 
+		else: 
+			subjects.append('ZNONE') 
+	subjects = [sub for sub in subjects if sub.isupper()]
+	set_subs = set(subjects)
+	set_subs = sorted(set_subs)
+	f = open("frequent_subjects.txt", "w")
+	for sub in set_subs:
+		#print(sub, subjects.count(sub)) 
+		if subjects.count(sub) > 1000:
+			f.write(str(sub)+ ' '+ str(subjects.count(sub))+'\n')
+	f.close()
 if __name__ == "__main__":
 	main()
