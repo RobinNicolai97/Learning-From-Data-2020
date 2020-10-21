@@ -1,5 +1,9 @@
-import json
+# surpress warnings and information
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
+# import
+import json
 from collections import defaultdict
 import tensorflow as tf
 import numpy as np
@@ -8,8 +12,9 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from nltk.corpus import stopwords
 STOPWORDS = set(stopwords.words('english'))
 
-
 def read_corpus(dir_name='data'):
+	print("Reading files")
+
 	file_list = os.listdir(dir_name)
 	article_list = []
 	label_list = []
@@ -34,6 +39,8 @@ def read_corpus(dir_name='data'):
 
 
 def train_classifier(trainx, trainy_seq, testx, testy_seq, label_amount):
+	print("Training Classifier")
+
 	vocab_size = 5000
 	embedding_dim = 64
 	max_length = 200
@@ -130,9 +137,6 @@ def main():
 
 	trainy_seq = np.array(trainy)
 	testy_seq = np.array(testy)
-
-	for item in testy_seq:
-		print(item)
 
 	# classifier
 	classifier = train_classifier(trainx, trainy_seq, testx, testy_seq, label_amount)
