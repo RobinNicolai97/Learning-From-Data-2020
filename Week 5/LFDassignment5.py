@@ -96,11 +96,11 @@ if __name__ == '__main__':
 	print("Building model...")
 	model = Sequential()
 	# Single 500-neuron hidden layer with sigmoid activation
-	model.add(Dense(input_dim = nb_features, units = 500, activation = 'sigmoid'))
+	model.add(Dense(input_dim = nb_features, units = 500, activation = 'relu'))
 	# Output layer with softmax activation
 	model.add(Dense(units = nb_classes, activation = 'softmax'))
 	# Specify optimizer, loss and validation metric
-	model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
+	model.compile(loss='KLDivergence', optimizer='sgd', metrics=['accuracy'])
 	# Train the model 
 	history = model.fit(X_train, Y_train, epochs = args.epochs, batch_size = args.batch_size, validation_data = (X_dev, Y_dev), shuffle = True, verbose = 1)
 

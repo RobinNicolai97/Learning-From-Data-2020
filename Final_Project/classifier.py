@@ -33,7 +33,7 @@ def read_corpus(dir_name='data'):
 	return article_list, label_list
 
 
-def train_classifier(trainx, trainy_seq, testx, testy_seq):
+def train_classifier(trainx, trainy_seq, testx, testy_seq, label_amount):
 	vocab_size = 5000
 	embedding_dim = 64
 	max_length = 200
@@ -56,7 +56,7 @@ def train_classifier(trainx, trainy_seq, testx, testy_seq):
 		tf.keras.layers.Embedding(vocab_size, embedding_dim),
 		tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(embedding_dim)),
 		tf.keras.layers.Dense(embedding_dim, activation='relu'),
-		tf.keras.layers.Dense(20, activation='softmax')
+		tf.keras.layers.Dense(label_amount, activation='softmax')
 	])
 
 	model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
@@ -111,7 +111,8 @@ def most_common_labels(label_list, label_amount):
 
 def main():
 	article_list, label_list = read_corpus('data')
-	label_set = most_common_labels(label_list, 19)
+	label_amount = 20
+	label_set = most_common_labels(label_list, label_amount-1)
 	label_seq_list, label_seq_dic = labels_to_sequences(label_list, label_set)
 
 	# split in train and test
@@ -134,7 +135,7 @@ def main():
 		print(item)
 
 	# classifier
-	classifier = train_classifier(trainx, trainy_seq, testx, testy_seq)
+	classifier = train_classifier(trainx, trainy_seq, testx, testy_seq, label_amount)
 
 
 if __name__ == "__main__":
