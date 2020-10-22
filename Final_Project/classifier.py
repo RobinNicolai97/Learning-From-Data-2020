@@ -10,6 +10,8 @@ import numpy as np
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from nltk.corpus import stopwords
+from sklearn.metrics import f1_score, precision_score, recall_score, confusion_matrix, classification_report
+
 STOPWORDS = set(stopwords.words('english'))
 
 def read_corpus(dir_name='data'):
@@ -69,6 +71,11 @@ def train_classifier(trainx, trainy_seq, testx, testy_seq, label_amount):
 	model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 	num_epochs = 10
 	history = model.fit(train_padded, trainy_seq, epochs=num_epochs, validation_data=(test_padded, testy_seq), verbose=2)
+
+	y_pred1 = model.predict(test_padded)
+	y_pred = np.argmax(y_pred1, axis=1)
+	print(classification_report(testy_seq, y_pred))
+
 
 
 def labels_to_sequences(label_list, label_set):
