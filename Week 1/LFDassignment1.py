@@ -1,97 +1,119 @@
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.pipeline import Pipeline
-from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
-import sys
-
-# Checks the command line arguments for input
-# sentiment - enables sentiment
-# probability - shows predictions as probability
-arg_sentiment = False
-arg_probability = False
-if len(sys.argv) > 1:
-    arg_sentiment = sys.argv[1].lower() == "sentiment"
-if len(sys.argv) > 2:
-    arg_probability = sys.argv[2].lower() == "probability"
-
-# COMMENT THIS
-# This function takes the corpus textfile as an input, together with a Boolean expression (True/False).
-# If use_sentiment == True, the script will classify reviews as positive or negative. If use_sentiment == False, it will classify reviews into six possible categories. 
-# It takes the label (the to be predicted class) out of each line in the tokenized textfile ( tokens[1] for sentiment, tokens[0] for category ) 
-# together with the textual content of the review: token[3:].
-# The function returns a list of textual reviews and a list of their corresponding labels.
+import numpy, json, argparse
+from keras.models import Sequential
+from keras.layers.core import Dense, Activation
+from keras.optimizers import SGD
+from sklearn.metrics import accuracy_score, classification_report, accuracy_score, confusion_matrix
+from sklearn.dummy import DummyClassifier
+from sklearn.preprocessing import LabelBinarizer
+numpy.random.seed(1337)
 
 
-def read_corpus(corpus_file, use_sentiment):
-    documents = []
-    labels = []
-    with open(corpus_file, encoding='utf-8') as f:
-        for line in f:
-            tokens = line.strip().split()
-
-            documents.append(tokens[3:])
-
-            if use_sentiment:
-                # 2-class problem: positive vs negative
-                labels.append( tokens[1] )
-            else:
-                # 6-class problem: books, camera, dvd, health, music, software
-                labels.append( tokens[0] )
-
-    return documents, labels
-    
-# a dummy function that just returns its input
-def identity(x):
-    return x
-
-# COMMENT THIS
-# The function read_corpus is activated, so that X == the textual content of the reviews and Y == their corresponding labels.
-# The data is divided into 75% training-data and 25% test-data. 
-
-X, Y = read_corpus('trainset.txt', use_sentiment=arg_sentiment)
-split_point = int(0.75*len(X))
-Xtrain = X[:split_point]
-Ytrain = Y[:split_point]
-Xtest = X[split_point:]
-Ytest = Y[split_point:]
-
-# let's use the TF-IDF vectorizer
-tfidf = True
-
-# we use a dummy function as tokenizer and preprocessor,
-# since the texts are already preprocessed and tokenized.
-if tfidf:
-    vec = TfidfVectorizer(preprocessor = identity,
-                          tokenizer = identity)
-else:
-    vec = CountVectorizer(preprocessor = identity,
-                          tokenizer = identity)
-
-# combine the vectorizer with a Naive Bayes classifier.
-classifier = Pipeline( [('vec', vec),
-                        ('cls', MultinomialNB())] )
+# Read in the NE data, with either 2 or 6 classes
+def read_corpus(corpus_file, binary_classes):
+	print('Reading in data from {0}...'.format(corpus_file))
+	words = []
+	labels = []
+	with open(corpus_file, encoding='utf-8') as f:
+		for line in f:
+			parts = line.strip().split()
+			words.append(parts[0])
+			if binary_classes:
+				if parts[1] in ['GPE', 'LOC']:
+					labels.append('LOCATION')
+				else:
+					labels.append('NON-LOCATION')
+			else:
+				labels.append(parts[1])
+	print('Done!')
+	return words, labels
 
 
-# COMMENT THIS
-# The Naive Bayes classifier takes the textual content of the reviews and their corresponding classes. 
-# It will train on right combinations of review and classes. Then it will be able to make predictions about the classes of not-seen-before review texts. 
-classifier.fit(Xtrain, Ytrain)
+# Read in word embeddings
+def read_embeddings(embeddings_file):
+	print('Reading in embeddings from {0}...'.format(embeddings_file))
+	embeddings = json.load(open(embeddings_file, 'r'))
+	embeddings = {word:numpy.array(embeddings[word]) for word in embeddings}
+	print('Done!')
+	return embeddings
 
-# COMMENT THIS  
-# The Naive Bayes classifier predicts the classes of all reviews in the test-data.
-Yguess = classifier.predict(Xtest)
 
-# The script prints all probabilities for each feature set
-if arg_probability:
-    prob_list = classifier.predict_proba(Xtest)
-    print(classifier.classes_)
-    for prob_array in prob_list:
-        print(prob_array)
-else:
-    # COMMENT THIS
-    # a simple accuracy measure is taken. This score is basicly how many times Ytest[X] == Yguess[X], divided by the length of Ytest and Yguess (which are both the same length).
-    print('\n accuracy score:', accuracy_score(Ytest, Yguess) )
-    print('\n\n')
-    print(classification_report(Ytest,Yguess))
-    print('\n Confusion Matrix \n')
-    print(confusion_matrix(Ytest,Yguess))
+# Turn words into embeddings, i.e. replace words by their corresponding embeddings
+def vectorizer(words, embeddings):
+	vectorized_words = []
+	for word in words:
+		try:
+			vectorized_words.append(embeddings[word.lower()])
+		except KeyError:
+			vectorized_words.append(embeddings['UNK'])
+	return numpy.array(vectorized_words)
+
+
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description='KerasNN parameters')
+	parser.add_argument('data', metavar='named_entity_data.txt', type=str, help='File containing named entity data.')
+	parser.add_argument('embeddings', metavar='embeddings.json', type=str, help='File containing json-embeddings.')
+	parser.add_argument('-b', '--binary', action='store_true', help='Use binary classes.')
+	args = parser.parse_args()
+
+	# hyperparameter settings
+	hyp_activation = "selu"
+	hyp_epochs = 10
+	hyp_batch_size = 5
+	hyp_learning_rate = 0.07
+
+	# Read in the data and embeddings
+	X, Y = read_corpus(args.data, binary_classes=args.binary)
+	embeddings = read_embeddings(args.embeddings)
+
+	Zstring = ["suzuki", "adidas", "peking"]
+
+	# Transform words to embeddings
+	X = vectorizer(X, embeddings)
+	Z = vectorizer(Zstring, embeddings)
+
+	# Transform string labels to one-hot encodings
+	encoder = LabelBinarizer()
+	Y = encoder.fit_transform(Y)  # Use encoder.classes_ to find mapping of one-hot indices to string labels
+	if args.binary:
+		Y = numpy.where(Y == 1, [0, 1], [1, 0])
+
+	# Split in training and test data
+	split_point = int(0.75*len(X))
+	Xtrain = X[:split_point]
+	Ytrain = Y[:split_point]
+	Xtest = X[split_point:]
+	Ytest = Y[split_point:]
+
+	# Define the properties of the perceptron model
+	dummy_clf = DummyClassifier(strategy="most_frequent")
+	model = Sequential()
+	model.add(Dense(input_dim=X.shape[1], units=Y.shape[1]))
+	model.add(Activation(hyp_activation))
+	sgd = SGD(lr=hyp_learning_rate)
+	loss_function = 'mean_squared_error'
+	model.compile(loss=loss_function, optimizer=sgd, metrics=['accuracy'])
+
+	# Train the perceptron
+	dummy_clf.fit(Xtrain, Ytrain)
+	model.fit(Xtrain, Ytrain, verbose=1, epochs=hyp_epochs, batch_size=hyp_batch_size)
+
+
+	# Get predictions
+	Yguessbase = dummy_clf.predict(Xtest)
+	Yguess = model.predict(Xtest)
+
+	# Test words not in training set
+	Zguess = model.predict_classes(Z)
+	for index, element in enumerate(Zguess):
+		print(str(Zstring[index]) + ": " + str(encoder.classes_[element]))
+	print()
+
+	# Convert to numerical labels to get scores with sklearn in 6-way setting
+	Yguess = numpy.argmax(Yguess, axis=1)
+	Yguessbase = numpy.argmax(Yguessbase, axis=1)
+	Ytest = numpy.argmax(Ytest, axis=1)
+	print('\n perceptron \n')
+	print('Classification accuracy on test: {0}'.format(accuracy_score(Ytest, Yguess)))
+	print(confusion_matrix(Ytest, Yguess))
+	print(classification_report(Ytest, Yguess))
+	print('\n baseline \n')
