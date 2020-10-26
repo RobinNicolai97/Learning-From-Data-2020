@@ -18,11 +18,14 @@ def read_corpus(dir_name='data'):
 	print("Reading files")
 
 	file_list = os.listdir(dir_name)
+	if '.DS_Store' in file_list:
+		file_list.remove('.DS_Store')
+
 	article_list = []
 	label_list = []
 
 	for file in file_list:
-		with open(dir_name + "\\" + file) as f:
+		with open(dir_name + "/" + file) as f:
 			data = json.load(f)
 			articles = data['articles']
 			for article in articles:
@@ -64,13 +67,15 @@ def train_classifier(trainx, trainy_seq, testx, testy_seq, label_amount):
 	model = tf.keras.Sequential([
 		tf.keras.layers.Embedding(vocab_size, embedding_dim),
 		tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(embedding_dim)),
-		tf.keras.layers.Dense(embedding_dim, activation='relu'),
+		tf.keras.layers.Dense(embedding_dim, activation='selu'),
+		tf.keras.layers.Dropout(0.1),
 		tf.keras.layers.Dense(label_amount, activation='softmax')
 	])
 
-	model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-	num_epochs = 10
-	history = model.fit(train_padded, trainy_seq, epochs=num_epochs, validation_data=(test_padded, testy_seq), verbose=2)
+	model.compile(loss='sparse_categorical_crossentropy', optimizer='Adam', metrics=['accuracy'])
+	num_epochs = 5
+	batch_size = 50
+	history = model.fit(train_padded, trainy_seq, epochs=num_epochs, batch_size=batch_size validation_data=(test_padded, testy_seq), verbose=2)
 
 	y_pred1 = model.predict(test_padded)
 	y_pred = np.argmax(y_pred1, axis=1)
