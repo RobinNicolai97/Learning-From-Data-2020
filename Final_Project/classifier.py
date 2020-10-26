@@ -43,7 +43,8 @@ def train_classifier(trainx, trainy_seq, testx, testy_seq, label_amount):
 
 	vocab_size = 5000
 	embedding_dim = 64
-	max_length = 200
+	max_length = 800
+	num_epochs = 3
 	trunc_type = 'post'
 	padding_type = 'post'
 	oov_tok = '<OOV>'
@@ -67,7 +68,6 @@ def train_classifier(trainx, trainy_seq, testx, testy_seq, label_amount):
 	])
 
 	model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-	num_epochs = 10
 	history = model.fit(train_padded, trainy_seq, epochs=num_epochs, validation_data=(test_padded, testy_seq), verbose=2)
 
 
@@ -80,7 +80,6 @@ def labels_to_sequences(label_list, label_set):
 	for label in label_set:
 		label_seq_dic[label] = seq_index_counter
 		seq_index_counter += 1
-
 
 	for labels in label_list:
 		temp_list = []
