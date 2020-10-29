@@ -12,7 +12,8 @@ import numpy as np
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from nltk.corpus import stopwords
-from sklearn.metrics import f1_score, precision_score, recall_score, confusion_matrix, classification_report
+from sklearn.metrics import f1_score, precision_score, recall_score, confusion_matrix, classification_report, accuracy_score
+from sklearn.dummy import DummyClassifier
 
 STOPWORDS = set(stopwords.words('english'))
 
@@ -49,6 +50,12 @@ def read_corpus(dir_name='data'):
 def train_classifier(train_padded, trainy_seq, test_padded, testy_seq, label_amount, label_seq_to_label_dic):
 	# Source used for help with implementation:
 	# https://towardsdatascience.com/multi-class-text-classification-with-lstm-using-tensorflow-2-0-d88627c10a35
+
+	# baseline
+	dummy_clf = DummyClassifier(strategy="most_frequent")
+	dummy_clf.fit(train_padded, trainy_seq)
+	yguess = dummy_clf.predict(test_padded)
+	print('Accuracy score majority class baseline: {0}'.format(accuracy_score(testy_seq, yguess)))
 
 	print("Training Classifier")
 
@@ -176,7 +183,7 @@ def main(argv):
 		train = argv[1].lower() == "true"
 
 	article_list, label_list = read_corpus('data')
-	label_amount = 10
+	label_amount = 20
 	label_set = most_common_labels(label_list, label_amount-1)
 	label_seq_list, label_seq_to_label_dic = labels_to_sequences(label_list, label_set)
 
@@ -212,6 +219,7 @@ def main(argv):
 
 	# evaluate
 	classifier_evaluate(classifier, label_seq_to_label_dic, test_padding, testy_seq)
+
 
 
 if __name__ == "__main__":
