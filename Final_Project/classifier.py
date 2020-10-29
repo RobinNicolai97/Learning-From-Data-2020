@@ -54,7 +54,7 @@ def train_classifier(train_padded, trainy_seq, test_padded, testy_seq, label_amo
 
 	vocab_size = 5000
 	embedding_dim = 64
-	num_epochs = 10
+	num_epochs = 5
 	batch_size = 50
 
 	model = tf.keras.Sequential([
@@ -119,6 +119,8 @@ def classifier_evaluate(classifier, label_seq_to_label_dic, test_padded, testy_s
 
 	# print classification report
 	print(classification_report(y_test_labels, y_pred_labels))
+	print(confusion_matrix(y_test_labels, y_pred_labels))
+
 
 
 def labels_to_sequences(label_list, label_set):
@@ -174,7 +176,7 @@ def main(argv):
 		train = argv[1].lower() == "true"
 
 	article_list, label_list = read_corpus('data')
-	label_amount = 20
+	label_amount = 10
 	label_set = most_common_labels(label_list, label_amount-1)
 	label_seq_list, label_seq_to_label_dic = labels_to_sequences(label_list, label_set)
 
