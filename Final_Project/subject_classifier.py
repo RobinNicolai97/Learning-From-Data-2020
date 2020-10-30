@@ -1,20 +1,6 @@
-# Classifier to find the subject of news articles in the COP corpus
-# File name: subject_classifier.py
-# Date: 30-10-2020
-# Author: Erwin Bruining & Arjan Schelhaas & Robin Nicolai
-
-# HOW TO USE
-# In order to allow usage of all files, our model by default uses all files in the directory 'data'
-# The command to use the model in its default settings would be:
-# 	python3 subject_classifier.py none none
-# The command to use the model with custom train and test file would be:
-# 	python3 subject_classifier.py train_file test_file
-# The third command is whether to train a new model or whether to use a previously trained model
-# The command to use the model without actually training a new model would be:
-# 	python3 subject_classifier.py train_file test_file False
-
-# suppress warnings and information
+# surpress warnings and information
 import os
+import sys
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 # import
@@ -27,7 +13,8 @@ import numpy as np
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from nltk.corpus import stopwords
-from sklearn.metrics import classification_report
+from sklearn.metrics import f1_score, precision_score, recall_score, confusion_matrix, classification_report, accuracy_score
+from sklearn.dummy import DummyClassifier
 
 STOPWORDS = set(stopwords.words('english'))
 
@@ -89,6 +76,12 @@ def read_file(file_name):
 def train_classifier(train_padded, trainy_seq, test_padded, testy_seq, label_amount, label_seq_to_label_dic):
 	# Source used for help with implementation:
 	# https://towardsdatascience.com/multi-class-text-classification-with-lstm-using-tensorflow-2-0-d88627c10a35
+
+	# baseline
+	dummy_clf = DummyClassifier(strategy="most_frequent")
+	dummy_clf.fit(train_padded, trainy_seq)
+	yguess = dummy_clf.predict(test_padded)
+	print('Accuracy score majority class baseline: {0}'.format(accuracy_score(testy_seq, yguess)))
 
 	print("Training Classifier")
 
@@ -162,6 +155,7 @@ def classifier_evaluate(classifier, label_seq_to_label_dic, test_padded, testy_s
 
 	# print classification report
 	print(classification_report(y_test_labels, y_pred_labels))
+	print(confusion_matrix(y_test_labels, y_pred_labels))
 
 
 # Turn labels into sequence to allow use with LSTM model
@@ -198,7 +192,6 @@ def labels_to_sequences(label_list, label_set):
 	return label_seq_list, label_seq_to_label_dic
 
 
-# Finds the n-amount of most common labels in all articles provided
 def most_common_labels(label_list, label_amount):
 	label_count_dic = defaultdict(lambda: 0)
 	for labels in label_list:
