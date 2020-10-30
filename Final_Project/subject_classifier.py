@@ -1,9 +1,24 @@
-# surpress warnings and information
+# Classifier to find the subject of news articles in the COP corpus
+# File name: subject_classifier.py
+# Date: 30-10-2020
+# Author: Erwin Bruining & Arjan Schelhaas & Robin Nicolai
+
+# HOW TO USE
+# In order to allow usage of all files, our model by default uses all files in the directory 'data'
+# The command to use the model in its default settings would be:
+# 	python3 subject_classifier.py none none
+# The command to use the model with custom train and test file would be:
+# 	python3 subject_classifier.py train_file test_file
+# The third command is whether to train a new model or whether to use a previously trained model
+# The command to use the model without actually training a new model would be:
+# 	python3 subject_classifier.py train_file test_file False
+
+# suppress warnings and information
 import os
-import sys
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 # import
+import sys
 import json
 from collections import defaultdict
 import tensorflow as tf
@@ -12,11 +27,12 @@ import numpy as np
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from nltk.corpus import stopwords
-from sklearn.metrics import f1_score, precision_score, recall_score, confusion_matrix, classification_report
+from sklearn.metrics import classification_report
 
 STOPWORDS = set(stopwords.words('english'))
 
 
+# Read all possible files in a folder
 def read_corpus(dir_name='data'):
 	print("Reading files")
 
@@ -46,6 +62,30 @@ def read_corpus(dir_name='data'):
 	return article_list, label_list
 
 
+# Read a single file
+def read_file(file_name):
+	article_list = []
+	label_list = []
+
+	with open(file_name) as f:
+		data = json.load(f)
+		articles = data['articles']
+		for article in articles:
+			article_list.append(article['body'])
+			# Retrieve labels
+			subjects = article['classification']['subject']
+			if subjects:
+				labels = []
+				for label in subjects:
+					labels.append(label['name'])
+				label_list.append(labels)
+			else:
+				label_list.append('ZNONE')
+
+	return article_list, label_list
+
+
+# Create, compile, fit and save a LSTM model
 def train_classifier(train_padded, trainy_seq, test_padded, testy_seq, label_amount, label_seq_to_label_dic):
 	# Source used for help with implementation:
 	# https://towardsdatascience.com/multi-class-text-classification-with-lstm-using-tensorflow-2-0-d88627c10a35
@@ -72,6 +112,7 @@ def train_classifier(train_padded, trainy_seq, test_padded, testy_seq, label_amo
 	return model
 
 
+# Pads all sequences to be at the same length to allow use with the LSTM model
 def sequence_padding(trainx, testx, devx):
 	vocab_size = 5000
 	max_length = 200
@@ -96,6 +137,7 @@ def sequence_padding(trainx, testx, devx):
 	return train_padded, test_padded, dev_padded
 
 
+# Load a previous classifier model at its default saving location
 def load_classifier(path="model/final_model"):
 	print("Loading Classifier")
 
@@ -104,6 +146,7 @@ def load_classifier(path="model/final_model"):
 	return model
 
 
+# Perform and print the evaluation of a given model
 def classifier_evaluate(classifier, label_seq_to_label_dic, test_padded, testy_seq):
 	# turn predictions to labels
 	y_pred_per = classifier.predict(test_padded)
@@ -121,6 +164,7 @@ def classifier_evaluate(classifier, label_seq_to_label_dic, test_padded, testy_s
 	print(classification_report(y_test_labels, y_pred_labels))
 
 
+# Turn labels into sequence to allow use with LSTM model
 def labels_to_sequences(label_list, label_set):
 	seq_index_counter = 0
 	label_seq_to_label_dic = {}
@@ -154,6 +198,7 @@ def labels_to_sequences(label_list, label_set):
 	return label_seq_list, label_seq_to_label_dic
 
 
+# Finds the n-amount of most common labels in all articles provided
 def most_common_labels(label_list, label_amount):
 	label_count_dic = defaultdict(lambda: 0)
 	for labels in label_list:
@@ -169,47 +214,89 @@ def most_common_labels(label_list, label_amount):
 
 
 def main(argv):
-	train = False
+	# First argument is train file
+	# Second argument is test file
+	# Third time is whether to train a new model or load a previous model
+	# When either train file or test file is set to None, the system will regard all files in the data folder
+	# Prefered use is using no defined train or test file
+
+	# Command line arguments
+	train_file = None
 	if len(argv) > 1:
-		train = argv[1].lower() == "true"
+		if argv[1].lower != "none":
+			train_file = argv[1]
+	test_file = None
+	if len(argv) > 2:
+		if argv[2].lower != "none":
+			test_file = argv[2]
+	train = True
+	if len(argv) > 3:
+		train = argv[3].lower() == "false"
 
-	article_list, label_list = read_corpus('data')
-	label_amount = 20
-	label_set = most_common_labels(label_list, label_amount-1)
-	label_seq_list, label_seq_to_label_dic = labels_to_sequences(label_list, label_set)
+	# Use entire corpus
+	if test_file is None or train_file is None:
+		article_list, label_list = read_corpus('data')
+		label_amount = 20
+		label_set = most_common_labels(label_list, label_amount-1)
+		label_seq_list, label_seq_to_label_dic = labels_to_sequences(label_list, label_set)
 
-	# split in train and test
-	train_percentage = 0.7
-	test_percentage = 0.2
-	article_len = len(article_list)
-	train_split_index = round(article_len * train_percentage)
-	test_split_index = round(article_len * (train_percentage + test_percentage))
+		# split in train and test
+		train_percentage = 0.7
+		test_percentage = 0.2
+		article_len = len(article_list)
+		train_split_index = round(article_len * train_percentage)
+		test_split_index = round(article_len * (train_percentage + test_percentage))
 
-	label_tokenizer = Tokenizer()
-	label_tokenizer.fit_on_texts(label_list)
+		label_tokenizer = Tokenizer()
+		label_tokenizer.fit_on_texts(label_list)
 
-	trainx = article_list[:train_split_index]
-	trainy = label_seq_list[:train_split_index]
-	testx = article_list[train_split_index:test_split_index]
-	testy = label_seq_list[train_split_index:test_split_index]
-	devx = article_list[test_split_index:]
-	devy = label_seq_list[test_split_index:]
+		trainx = article_list[:train_split_index]
+		trainy = label_seq_list[:train_split_index]
+		testx = article_list[train_split_index:test_split_index]
+		testy = label_seq_list[train_split_index:test_split_index]
+		devx = article_list[test_split_index:]
+		devy = label_seq_list[test_split_index:]
 
-	trainy_seq = np.array(trainy)
-	testy_seq = np.array(testy)
-	devy_seq = np.array(devy)
+		trainy_seq = np.array(trainy)
+		testy_seq = np.array(testy)
+		devy_seq = np.array(devy)
+	# Use defined train and test file
+	else:
+		train_article_list, train_label_list = read_file(train_file)
+		test_article_list, test_label_list = read_file(test_file)
+
+		label_amount = 20
+		label_set = most_common_labels(train_label_list + test_label_list, label_amount-1)
+		label_seq_list, label_seq_to_label_dic = labels_to_sequences(train_label_list + test_label_list, label_set)
+		split_index = len(train_label_list)
+
+		trainx = train_article_list
+		trainy = label_seq_list[:split_index]
+		testx = test_article_list
+		testy = label_seq_list[split_index:]
+		devx = testx
+		devy = testy
+
+		trainy_seq = np.array(trainy)
+		testy_seq = np.array(testy)
+		devy_seq = np.array(devy)
 
 	# padding
 	train_padding, test_padding, dev_padding = sequence_padding(trainx, testx, devx)
 
 	# classifier
+	classifier = False
 	if train:
 		classifier = train_classifier(train_padding, trainy_seq, dev_padding, devy_seq, label_amount, label_seq_to_label_dic)
 	else:
-		classifier = load_classifier()
+		try:
+			classifier = load_classifier()
+		except:
+			print("No previous model found, use argument 'True' to train a model.")
 
 	# evaluate
-	classifier_evaluate(classifier, label_seq_to_label_dic, test_padding, testy_seq)
+	if classifier is not False:
+		classifier_evaluate(classifier, label_seq_to_label_dic, test_padding, testy_seq)
 
 
 if __name__ == "__main__":
