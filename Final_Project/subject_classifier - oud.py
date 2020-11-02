@@ -230,11 +230,10 @@ def main(argv):
 			train = True
 			
 	# Use entire corpus
-	article_list, label_list = read_corpus('data')
-	label_amount = 20
-	label_set = most_common_labels(label_list, label_amount-1)
 	if test_file is None or train_file is None:
-
+		article_list, label_list = read_corpus('data')
+		label_amount = 20
+		label_set = most_common_labels(label_list, label_amount-1)
 		label_seq_list, label_seq_to_label_dic = labels_to_sequences(label_list, label_set)
 
 		# split in train and test
@@ -263,7 +262,7 @@ def main(argv):
 		test_article_list, test_label_list = read_file(test_file)
 
 		label_amount = 20
-		#label_set = most_common_labels(train_label_list + test_label_list, label_amount-1)
+		label_set = most_common_labels(train_label_list + test_label_list, label_amount-1)
 		label_seq_list, label_seq_to_label_dic = labels_to_sequences(train_label_list + test_label_list, label_set)
 		split_index = len(train_label_list)
 

@@ -1,66 +1,72 @@
+C:\Users\RNico\Documents\GitHub\Learning-From-Data-2020\Final_Project>subject_classifier.py data/COP1.filt3.sub.json test/COP25.filt3.sub.json false
+Reading files
+{'CLIMATOLOGY', 'EMISSIONS', 'INTERNATIONAL RELATIONS', 'TREATIES & AGREEMENTS', 'ZNONE', 'AGREEMENTS', 'CLIMATE CHANGE', 'ENVIRONMENT & NATURAL RESOURCES', 'UNITED NATIONS', 'POLITICS', 'POLLUTION & ENVIRONMENTAL IMPACTS', 'GOVERNMENT ADVISORS & MINISTERS', 'HEADS OF STATE & GOVERNMENT', 'TALKS & MEETINGS', 'GREENHOUSE GASES', 'GOVERNMENT & PUBLIC ADMINISTRATION', 'GLOBAL WARMING', 'LEGISLATIVE BODIES', 'NEGATIVE PERSONAL NEWS', 'PRIME MINISTERS'}
+Loading Classifier
+C:\Users\RNico\AppData\Local\Programs\Python\Python38\lib\site-packages\sklearn\metrics\_classification.py:1221: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
                                     precision    recall  f1-score   support
 
-                        AGREEMENTS       0.05      0.12      0.07        91
-                    CLIMATE CHANGE       0.12      0.01      0.03       204
-                       CLIMATOLOGY       0.02      0.53      0.04        45
-                         EMISSIONS       0.06      0.03      0.04       117
-   ENVIRONMENT & NATURAL RESOURCES       0.05      0.07      0.06        55
-                    GLOBAL WARMING       0.00      0.00      0.00        25
-GOVERNMENT & PUBLIC ADMINISTRATION       0.00      0.00      0.00        73
-   GOVERNMENT ADVISORS & MINISTERS       0.00      0.00      0.00        22
-                  GREENHOUSE GASES       0.01      0.09      0.02        22
-       HEADS OF STATE & GOVERNMENT       0.00      0.00      0.00        51
-                LEGISLATIVE BODIES       0.00      0.00      0.00        45
-            NEGATIVE PERSONAL NEWS       0.19      0.02      0.03       230
-                 POLITICAL PARTIES       0.07      0.03      0.04        39
-                          POLITICS       0.02      0.02      0.02        46
- POLLUTION & ENVIRONMENTAL IMPACTS       0.07      0.04      0.05       111
-                   PRIME MINISTERS       0.00      0.00      0.00        23
-                  TALKS & MEETINGS       0.00      0.00      0.00        51
-                    UNITED NATIONS       0.00      0.00      0.00        36
-   US PRESIDENTIAL CANDIDATES 2020       0.00      0.00      0.00        52
-                             ZNONE       0.22      0.01      0.02       712
+                        AGREEMENTS       0.00      0.00      0.00        92
+                    CLIMATE CHANGE       0.14      0.09      0.11       207
+                       CLIMATOLOGY       0.03      0.02      0.03        45
+                         EMISSIONS       0.05      0.47      0.09       118
+   ENVIRONMENT & NATURAL RESOURCES       0.04      0.05      0.05        55
+                    GLOBAL WARMING       0.01      0.04      0.02        25
+GOVERNMENT & PUBLIC ADMINISTRATION       0.05      0.04      0.05        77
+   GOVERNMENT ADVISORS & MINISTERS       0.03      0.08      0.05        24
+                  GREENHOUSE GASES       0.00      0.00      0.00        23
+       HEADS OF STATE & GOVERNMENT       0.00      0.00      0.00        53
+           INTERNATIONAL RELATIONS       0.00      0.00      0.00        23
+                LEGISLATIVE BODIES       0.00      0.00      0.00        59
+            NEGATIVE PERSONAL NEWS       0.00      0.00      0.00       241
+                          POLITICS       0.04      0.14      0.06        58
+ POLLUTION & ENVIRONMENTAL IMPACTS       0.00      0.00      0.00       113
+                   PRIME MINISTERS       0.00      0.00      0.00        24
+                  TALKS & MEETINGS       0.00      0.00      0.00        45
+             TREATIES & AGREEMENTS       0.00      0.00      0.00        17
+                    UNITED NATIONS       0.00      0.00      0.00        37
+                             ZNONE       0.19      0.00      0.01       714
 
-                          accuracy                           0.03      2050
-                         macro avg       0.04      0.05      0.02      2050
-                      weighted avg       0.12      0.03      0.02      2050
+                          accuracy                           0.05      2050
+                         macro avg       0.03      0.05      0.02      2050
+                      weighted avg       0.09      0.05      0.02      2050
 
-[[ 11   2  41   3   2   2   4   2  14   0   0   0   0   3   3   0   0   2
-    1   1]
- [ 34   3  88   8   9   9   4   4  19   3   0   4   2   2  11   0   0   1
-    3   0]
- [  2   0  24   1   1   2   2   1   6   1   0   0   0   1   2   0   0   0
-    1   1]
- [ 22   2  53   3   0   5   2   4  11   1   0   2   1   5   3   1   0   0
-    0   2]
- [  7   0  30   0   4   2   0   0   6   0   0   0   1   1   2   0   0   0
-    2   0]
- [  0   0  20   0   0   0   0   0   4   0   0   0   0   0   1   0   0   0
-    0   0]
- [  5   1  37   2   7   5   0   0   8   0   0   1   0   3   0   0   0   0
+[[  0   8   3  41   3   4   1   2   0   5   2   1   0  12   0   1   4   4
+    1   0]
+ [  0  19   6  87   5   5   6   7   0   1   7   3   0  43   0   7   2   5
     2   2]
- [  5   0   7   1   1   0   0   0   0   0   0   0   0   2   2   0   0   0
-    4   0]
- [  4   0  11   0   1   0   0   0   2   0   0   0   0   0   3   0   0   0
+ [  0   7   1  25   1   2   0   1   0   1   1   0   0   3   0   2   0   0
+    0   1]
+ [  0  10   1  56   2   3   2   5   0   3   3   0   0  25   1   2   0   2
+    2   1]
+ [  0   8   1  26   3   7   1   1   0   1   1   0   0   3   0   0   0   3
+    0   0]
+ [  0   1   0  18   0   1   2   1   0   0   1   0   0   0   0   0   0   1
+    0   0]
+ [  0   3   1  48   4   6   3   4   0   0   0   0   0   5   0   0   0   2
     1   0]
- [  8   1  14   1   3   7   0   0   5   0   0   1   0   7   2   0   0   0
+ [  0   0   0   7   1   0   1   2   0   0   1   0   0   4   0   0   0   6
+    1   1]
+ [  0   3   0  12   1   2   0   1   0   0   0   0   0   3   0   0   0   1
+    0   0]
+ [  0   6   0  17   0   2   3   0   0   0   8   0   0  11   0   1   0   4
+    1   0]
+ [  0   0   0  16   0   0   0   1   0   0   0   0   0   2   0   0   3   0
+    0   1]
+ [  0   2   4  23   3   4   4   3   0   0   1   0   0  11   0   1   2   0
+    1   0]
+ [  0  15   3 152   2  17   9   6   0   2   2   0   0  17   0   1   4   5
+    3   3]
+ [  0   2   0  32   0   1   2   4   0   2   2   1   0   8   0   2   0   2
+    0   0]
+ [  2   5   1  63   6   4   3   5   0   0   9   0   0   9   0   0   0   2
+    0   4]
+ [  0   4   0   2   2   2   2   0   0   0   6   0   0   3   0   0   1   2
+    0   0]
+ [  0   3   1  32   1   0   2   2   0   0   0   0   0   1   2   0   0   0
+    1   0]
+ [  0   2   0   8   0   0   1   0   0   0   0   0   0   4   0   0   0   0
     2   0]
- [ 11   0  17   2   0   1   1   0   6   0   0   2   0   2   2   0   0   0
-    1   0]
- [ 18   3 121   0   8  12   8   1  27   1   0   4   2   2   9   1   0   2
-    1  10]
- [  5   0  15   1   0   1   1   0   6   1   0   0   1   3   1   0   0   0
-    1   3]
- [  5   0  22   3   0   2   0   2   5   2   0   1   0   1   1   0   0   0
-    0   2]
- [ 10   2  70   0   4   7   0   0   9   0   0   0   0   3   4   0   0   0
-    0   2]
- [  9   0   2   0   1   1   0   0   1   0   0   2   0   2   4   0   0   0
-    0   1]
- [  1   0  26   3   2   7   1   0   6   2   1   0   1   0   0   0   0   0
-    0   1]
- [  0   0  29   1   0   3   0   0   1   0   0   0   0   2   0   0   0   0
+ [  0   2   0  28   0   2   0   0   0   0   3   0   0   0   0   0   1   1
     0   0]
- [ 11   0  25   0   4   2   2   1   3   0   0   1   0   1   1   0   0   1
-    0   0]
- [ 49  10 405  24  29  34   9   9  81   6   1   3   7  13  10   1   1  10
+ [  4  39  11 471  35  29  14  18   0   6   8   1   0  56   2   3   6   4
