@@ -87,7 +87,7 @@ def train_classifier(train_padded, trainy_seq, test_padded, testy_seq, label_amo
 
 	vocab_size = 5000
 	embedding_dim = 64
-	num_epochs = 10
+	num_epochs = 5
 	batch_size = 50
 
 	model = tf.keras.Sequential([
@@ -224,8 +224,11 @@ def main(argv):
 			test_file = argv[2]
 	train = True
 	if len(argv) > 3:
-		train = argv[3].lower() == "false"
-
+		if argv[3].lower() == "false":
+			train = False
+		else:
+			train = True
+			
 	# Use entire corpus
 	if test_file is None or train_file is None:
 		article_list, label_list = read_corpus('data')
